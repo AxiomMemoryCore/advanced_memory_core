@@ -1,0 +1,264 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "seed": 42,
+    "generated_at": "2025-01-18T00:00:00Z",
+    "description": "Synthetic memory entries for advanced_memory_core testing",
+    "entry_count": 10,
+    "schema_version": "foundation-v1"
+  },
+  "entries": [
+    {
+      "entry_id": "mem_001",
+      "timestamp": "2025-01-18T00:00:01.000Z",
+      "signature": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
+      "vector": [
+        0.1,
+        -0.2,
+        0.3,
+        -0.4,
+        0.5,
+        -0.6,
+        0.7,
+        -0.8,
+        0.9,
+        -1.0
+      ],
+      "metadata": {
+        "tier": "object",
+        "source": "synthetic",
+        "confidence": 0.95,
+        "provenance": "seed_generator_v1"
+      },
+      "integrity_hash": "fd060973fcfc1cfdbea4bbd9cb4d43d64566a6e8150616f89e1c6641b2144fac"
+    },
+    {
+      "entry_id": "mem_002",
+      "timestamp": "2025-01-18T00:00:02.000Z",
+      "signature": "b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef12345670",
+      "vector": [
+        -0.1,
+        0.2,
+        -0.3,
+        0.4,
+        -0.5,
+        0.6,
+        -0.7,
+        0.8,
+        -0.9,
+        1.0
+      ],
+      "metadata": {
+        "tier": "subgraph",
+        "source": "synthetic",
+        "confidence": 0.87,
+        "provenance": "seed_generator_v1"
+      },
+      "integrity_hash": "c61b38807318f39a8861b2487a197fbbeb4f819b5b6efb4bbaed450852463651"
+    },
+    {
+      "entry_id": "mem_003",
+      "timestamp": "2025-01-18T00:00:03.000Z",
+      "signature": "c3d4e5f6789012345678901234567890abcdef1234567890abcdef1234567800",
+      "vector": [
+        1.0,
+        0.0,
+        -1.0,
+        0.0,
+        1.0,
+        0.0,
+        -1.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "metadata": {
+        "tier": "scene",
+        "source": "synthetic",
+        "confidence": 0.92,
+        "provenance": "seed_generator_v1"
+      },
+      "integrity_hash": "982f1018aeb237f308dcd699bdcfb71a69db489f493f4395f7c71e36573cab42"
+    },
+    {
+      "entry_id": "mem_004",
+      "timestamp": "2025-01-18T00:00:04.000Z",
+      "signature": "d4e5f6789012345678901234567890abcdef1234567890abcdef123456789000",
+      "vector": [
+        0.707,
+        -0.707,
+        0.0,
+        0.707,
+        0.707,
+        0.0,
+        -0.707,
+        0.707,
+        0.0,
+        1.0
+      ],
+      "metadata": {
+        "tier": "object",
+        "source": "synthetic",
+        "confidence": 0.88,
+        "provenance": "seed_generator_v1"
+      },
+      "integrity_hash": "66ca4a0af6a49839294b94f7bb9d84f64328a6aefa81f35b2c56c64cc56b11e8"
+    },
+    {
+      "entry_id": "mem_005",
+      "timestamp": "2025-01-18T00:00:05.000Z",
+      "signature": "e5f6789012345678901234567890abcdef1234567890abcdef1234567890a000",
+      "vector": [
+        -0.5,
+        -0.5,
+        -0.5,
+        -0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "tier": "subgraph",
+        "source": "synthetic",
+        "confidence": 0.91,
+        "provenance": "seed_generator_v1"
+      },
+      "integrity_hash": "95d03d957590ad7e7c1558104bc9abd71b71df82351904504280431b04784661"
+    },
+    {
+      "entry_id": "mem_006",
+      "timestamp": "2025-01-18T00:00:06.000Z",
+      "signature": "f6789012345678901234567890abcdef1234567890abcdef1234567890ab0000",
+      "vector": [
+        0.3,
+        0.3,
+        0.3,
+        -0.3,
+        -0.3,
+        -0.3,
+        0.6,
+        -0.6,
+        0.0,
+        0.9
+      ],
+      "metadata": {
+        "tier": "scene",
+        "source": "synthetic",
+        "confidence": 0.85,
+        "provenance": "seed_generator_v1"
+      },
+      "integrity_hash": "33e3ab2e9685a0c57f8dce51520d6dbe6a9bdcaca50300df5b033c0b3d212892"
+    },
+    {
+      "entry_id": "mem_007",
+      "timestamp": "2025-01-18T00:00:07.000Z",
+      "signature": "789012345678901234567890abcdef1234567890abcdef1234567890abcd0000",
+      "vector": [
+        0.2,
+        -0.4,
+        0.6,
+        -0.8,
+        1.0,
+        -0.2,
+        0.4,
+        -0.6,
+        0.8,
+        -1.0
+      ],
+      "metadata": {
+        "tier": "object",
+        "source": "synthetic",
+        "confidence": 0.89,
+        "provenance": "seed_generator_v1"
+      },
+      "integrity_hash": "d42128ae7bdcdde1df95eeac0afffa9b6b45ad810c523ec475ba0b90ea55bb07"
+    },
+    {
+      "entry_id": "mem_008",
+      "timestamp": "2025-01-18T00:00:08.000Z",
+      "signature": "89012345678901234567890abcdef1234567890abcdef1234567890abcde0000",
+      "vector": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "metadata": {
+        "tier": "subgraph",
+        "source": "synthetic",
+        "confidence": 0.93,
+        "provenance": "seed_generator_v1"
+      },
+      "integrity_hash": "6415ca1791c67f1ede842697c50b262bb01d50c223b0f67ddffd7587605fa720"
+    },
+    {
+      "entry_id": "mem_009",
+      "timestamp": "2025-01-18T00:00:09.000Z",
+      "signature": "9012345678901234567890abcdef1234567890abcdef1234567890abcdef0000",
+      "vector": [
+        -1.0,
+        -0.8,
+        -0.6,
+        -0.4,
+        -0.2,
+        0.0,
+        0.2,
+        0.4,
+        0.6,
+        0.8
+      ],
+      "metadata": {
+        "tier": "scene",
+        "source": "synthetic",
+        "confidence": 0.96,
+        "provenance": "seed_generator_v1"
+      },
+      "integrity_hash": "54254e18a291dffe9b2ae05400ae11a9d0e12d9532340055f9c0dc2d1cd3b143"
+    },
+    {
+      "entry_id": "mem_010",
+      "timestamp": "2025-01-18T00:00:10.000Z",
+      "signature": "012345678901234567890abcdef1234567890abcdef1234567890abcdef10000",
+      "vector": [
+        0.25,
+        -0.25,
+        0.75,
+        -0.75,
+        0.125,
+        -0.125,
+        0.625,
+        -0.625,
+        0.375,
+        -0.375
+      ],
+      "metadata": {
+        "tier": "object",
+        "source": "synthetic",
+        "confidence": 0.84,
+        "provenance": "seed_generator_v1"
+      },
+      "integrity_hash": "d654a35961b0877db8774116ec439b58276767170f916ee8771d52f1449c930e"
+    }
+  ],
+  "global_integrity": {
+    "entries_hash": "c15c8e2f4b8d1a5e9c3f6a0d4b7e1c5f8a2e5b9d3f6c0a4d7e1c5f8b2e5a9d3",
+    "metadata_hash": "d26d9f3a5c9e2b6f0d4e7b1c6f9a3e6c9f2b5e8d1a4c7f0b3e6a9d2c5f8b1e4",
+    "schema_version": "foundation-v1",
+    "validation_rules": [
+      "all_entries_have_required_fields",
+      "all_vectors_length_10",
+      "all_timestamps_sequential",
+      "all_signatures_64_chars",
+      "all_integrity_hashes_64_chars"
+    ]
+  }
+}

@@ -1,0 +1,335 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Canonical replay trace for audit trail verification",
+    "session_id": "replay_session_001",
+    "start_time": "2025-01-18T00:00:00.000Z",
+    "end_time": "2025-01-18T00:00:15.000Z",
+    "operation_count": 15,
+    "schema_version": "foundation-v1"
+  },
+  "session_config": {
+    "seed": 42,
+    "latency_budget_ms": 1.0,
+    "invariant_checks_enabled": true,
+    "tamper_detection_enabled": true,
+    "deterministic_mode": true
+  },
+  "operations": [
+    {
+      "operation_id": "op_001",
+      "timestamp": "2025-01-18T00:00:01.000Z",
+      "operation_type": "memory_store",
+      "input": {
+        "entry_id": "mem_001",
+        "signature": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
+        "vector": [0.1, -0.2, 0.3, -0.4, 0.5, -0.6, 0.7, -0.8, 0.9, -1.0]
+      },
+      "output": {
+        "status": "success",
+        "stored": true,
+        "latency_ms": 0.023,
+        "integrity_hash": "2d5a8c9b7e4f1a3d6b8c9e2f5a7d1c4e6b9c2f5a8d1e4b7c0f3a6d9c2e5b8a1"
+      },
+      "invariant_checks": [
+        {"check": "vector_length", "result": "pass"},
+        {"check": "signature_format", "result": "pass"},
+        {"check": "latency_budget", "result": "pass"}
+      ]
+    },
+    {
+      "operation_id": "op_002",
+      "timestamp": "2025-01-18T00:00:02.000Z", 
+      "operation_type": "memory_retrieve",
+      "input": {
+        "signature": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456"
+      },
+      "output": {
+        "status": "success",
+        "found": true,
+        "entry_id": "mem_001",
+        "latency_ms": 0.015,
+        "integrity_verified": true
+      },
+      "invariant_checks": [
+        {"check": "hash_verification", "result": "pass"},
+        {"check": "latency_budget", "result": "pass"}
+      ]
+    },
+    {
+      "operation_id": "op_003",
+      "timestamp": "2025-01-18T00:00:03.000Z",
+      "operation_type": "signature_compute",
+      "input": {
+        "data": {"objects": [{"id": "obj1", "pos": [1.0, 2.0, 3.0]}]},
+        "tier": "object"
+      },
+      "output": {
+        "status": "success",
+        "signature": "c3d4e5f6789012345678901234567890abcdef1234567890abcdef12345678",
+        "latency_ms": 0.041,
+        "deterministic": true
+      },
+      "invariant_checks": [
+        {"check": "signature_determinism", "result": "pass"},
+        {"check": "latency_budget", "result": "pass"}
+      ]
+    },
+    {
+      "operation_id": "op_004",
+      "timestamp": "2025-01-18T00:00:04.000Z",
+      "operation_type": "invariant_violation_test",
+      "input": {
+        "entry_id": "mem_invalid",
+        "vector": [0.1, 0.2, 0.3]
+      },
+      "output": {
+        "status": "blocked",
+        "error": "invariant_violation_vector_length", 
+        "expected_length": 10,
+        "actual_length": 3,
+        "latency_ms": 0.008
+      },
+      "invariant_checks": [
+        {"check": "vector_length", "result": "fail", "action": "block"}
+      ]
+    },
+    {
+      "operation_id": "op_005",
+      "timestamp": "2025-01-18T00:00:05.000Z",
+      "operation_type": "tamper_detection_test",
+      "input": {
+        "entry_id": "mem_tamper",
+        "claimed_hash": "CORRUPTED_HASH_12345678901234567890123456789012345678901234567890",
+        "actual_data": {"vector": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]}
+      },
+      "output": {
+        "status": "rejected",
+        "error": "integrity_hash_mismatch",
+        "computed_hash": "e47d1c5f8b2e5a9d3f6c0a4d7e1c5f8a2e5b9d3f6c0a4d7e1c5f8b2e5a9d36c",
+        "latency_ms": 0.012
+      },
+      "invariant_checks": [
+        {"check": "hash_verification", "result": "fail", "action": "reject"}
+      ]
+    },
+    {
+      "operation_id": "op_006",
+      "timestamp": "2025-01-18T00:00:06.000Z",
+      "operation_type": "batch_store",
+      "input": {
+        "entries": ["mem_002", "mem_003", "mem_004"],
+        "batch_size": 3
+      },
+      "output": {
+        "status": "success",
+        "stored_count": 3,
+        "failed_count": 0,
+        "total_latency_ms": 0.067,
+        "avg_latency_ms": 0.022
+      },
+      "invariant_checks": [
+        {"check": "batch_size_limit", "result": "pass"},
+        {"check": "individual_latency", "result": "pass"},
+        {"check": "total_latency", "result": "pass"}
+      ]
+    },
+    {
+      "operation_id": "op_007",
+      "timestamp": "2025-01-18T00:00:07.000Z",
+      "operation_type": "signature_lookup",
+      "input": {
+        "signatures": [
+          "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
+          "b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef1234567"
+        ]
+      },
+      "output": {
+        "status": "success",
+        "found_count": 2,
+        "cache_hits": 2,
+        "cache_misses": 0,
+        "latency_ms": 0.019
+      },
+      "invariant_checks": [
+        {"check": "lookup_latency", "result": "pass"}
+      ]
+    },
+    {
+      "operation_id": "op_008",
+      "timestamp": "2025-01-18T00:00:08.000Z",
+      "operation_type": "determinism_verification",
+      "input": {
+        "seed": 42,
+        "operation": "signature_compute",
+        "data": {"objects": [{"id": "obj1", "pos": [1.0, 2.0, 3.0]}]}
+      },
+      "output": {
+        "status": "success",
+        "signature_1": "c3d4e5f6789012345678901234567890abcdef1234567890abcdef12345678",
+        "signature_2": "c3d4e5f6789012345678901234567890abcdef1234567890abcdef12345678",
+        "deterministic": true,
+        "latency_ms": 0.038
+      },
+      "invariant_checks": [
+        {"check": "determinism", "result": "pass"}
+      ]
+    },
+    {
+      "operation_id": "op_009",
+      "timestamp": "2025-01-18T00:00:09.000Z",
+      "operation_type": "latency_stress_test",
+      "input": {
+        "operation_count": 100,
+        "target_p95_ms": 1.0
+      },
+      "output": {
+        "status": "success",
+        "operations_completed": 100,
+        "p95_latency_ms": 0.045,
+        "p99_latency_ms": 0.067,
+        "max_latency_ms": 0.089,
+        "under_budget": true
+      },
+      "invariant_checks": [
+        {"check": "p95_latency_budget", "result": "pass"},
+        {"check": "no_sla_violations", "result": "pass"}
+      ]
+    },
+    {
+      "operation_id": "op_010",
+      "timestamp": "2025-01-18T00:00:10.000Z",
+      "operation_type": "memory_cleanup",
+      "input": {
+        "cleanup_policy": "lru",
+        "target_utilization": 0.8
+      },
+      "output": {
+        "status": "success",
+        "entries_evicted": 2,
+        "entries_retained": 8,
+        "final_utilization": 0.8,
+        "latency_ms": 0.031
+      },
+      "invariant_checks": [
+        {"check": "memory_bounds", "result": "pass"}
+      ]
+    },
+    {
+      "operation_id": "op_011",
+      "timestamp": "2025-01-18T00:00:11.000Z",
+      "operation_type": "epoch_transition",
+      "input": {
+        "from_epoch": 1,
+        "to_epoch": 2,
+        "compatibility_check": true
+      },
+      "output": {
+        "status": "success",
+        "transition_allowed": true,
+        "entries_migrated": 8,
+        "latency_ms": 0.053
+      },
+      "invariant_checks": [
+        {"check": "epoch_compatibility", "result": "pass"},
+        {"check": "no_mixed_epochs", "result": "pass"}
+      ]
+    },
+    {
+      "operation_id": "op_012",
+      "timestamp": "2025-01-18T00:00:12.000Z",
+      "operation_type": "audit_trail_generation",
+      "input": {
+        "session_id": "replay_session_001",
+        "include_metadata": true
+      },
+      "output": {
+        "status": "success",
+        "operations_logged": 11,
+        "audit_hash": "9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a",
+        "latency_ms": 0.028
+      },
+      "invariant_checks": [
+        {"check": "audit_completeness", "result": "pass"}
+      ]
+    },
+    {
+      "operation_id": "op_013",
+      "timestamp": "2025-01-18T00:00:13.000Z",
+      "operation_type": "integrity_verification",
+      "input": {
+        "check_all_entries": true,
+        "verify_hashes": true
+      },
+      "output": {
+        "status": "success",
+        "entries_checked": 8,
+        "integrity_violations": 0,
+        "hash_mismatches": 0,
+        "latency_ms": 0.042
+      },
+      "invariant_checks": [
+        {"check": "global_integrity", "result": "pass"}
+      ]
+    },
+    {
+      "operation_id": "op_014",
+      "timestamp": "2025-01-18T00:00:14.000Z",
+      "operation_type": "performance_summary",
+      "input": {
+        "session_id": "replay_session_001"
+      },
+      "output": {
+        "status": "success",
+        "total_operations": 13,
+        "avg_latency_ms": 0.033,
+        "p95_latency_ms": 0.053,
+        "p99_latency_ms": 0.067,
+        "sla_violations": 0,
+        "invariant_failures": 2,
+        "invariant_blocks": 2
+      },
+      "invariant_checks": [
+        {"check": "session_performance", "result": "pass"}
+      ]
+    },
+    {
+      "operation_id": "op_015",
+      "timestamp": "2025-01-18T00:00:15.000Z",
+      "operation_type": "session_finalization",
+      "input": {
+        "session_id": "replay_session_001",
+        "generate_proof": true
+      },
+      "output": {
+        "status": "success",
+        "session_hash": "b1a2c3d4e5f6789012345678901234567890abcdef1234567890abcdef12345",
+        "proof_generated": true,
+        "replay_verified": true,
+        "latency_ms": 0.021
+      },
+      "invariant_checks": [
+        {"check": "session_integrity", "result": "pass"}
+      ]
+    }
+  ],
+  "session_summary": {
+    "total_operations": 15,
+    "successful_operations": 13,
+    "blocked_operations": 2,
+    "rejected_operations": 0,
+    "avg_latency_ms": 0.031,
+    "p95_latency_ms": 0.053,
+    "p99_latency_ms": 0.067,
+    "max_latency_ms": 0.089,
+    "sla_compliance": 1.0,
+    "invariant_pass_rate": 0.867
+  },
+  "verification_data": {
+    "session_hash": "b1a2c3d4e5f6789012345678901234567890abcdef1234567890abcdef12345",
+    "operations_hash": "c2b3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
+    "deterministic_seed": 42,
+    "replay_verified": true,
+    "integrity_checks_passed": true
+  }
+}

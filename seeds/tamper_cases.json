@@ -1,0 +1,111 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Deliberately corrupted entries for tamper detection testing",
+    "case_count": 2,
+    "schema_version": "foundation-v1",
+    "warning": "These entries contain intentional corruption for testing purposes"
+  },
+  "tamper_cases": [
+    {
+      "case_id": "tamper_001_hash_mismatch",
+      "description": "Valid entry structure but corrupted integrity hash",
+      "expected_error": "integrity_hash_mismatch",
+      "corrupted_entry": {
+        "entry_id": "mem_tamper_001",
+        "timestamp": "2025-01-18T00:00:11.000Z",
+        "signature": "tamper01234567890123456789012345678901234567890123456789012345",
+        "vector": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+        "metadata": {
+          "tier": "object",
+          "source": "tamper_test",
+          "confidence": 0.90,
+          "provenance": "tamper_generator_v1"
+        },
+        "integrity_hash": "CORRUPTED_HASH_12345678901234567890123456789012345678901234567890"
+      },
+      "correct_hash": "e47d1c5f8b2e5a9d3f6c0a4d7e1c5f8a2e5b9d3f6c0a4d7e1c5f8b2e5a9d36c",
+      "corruption_type": "hash_substitution"
+    },
+    {
+      "case_id": "tamper_002_invariant_violation",
+      "description": "Entry violates system invariants (invalid vector length)",
+      "expected_error": "invariant_violation_vector_length",
+      "corrupted_entry": {
+        "entry_id": "mem_tamper_002",
+        "timestamp": "2025-01-18T00:00:12.000Z",
+        "signature": "tamper12345678901234567890123456789012345678901234567890123456",
+        "vector": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7],
+        "metadata": {
+          "tier": "subgraph",
+          "source": "tamper_test",
+          "confidence": 0.85,
+          "provenance": "tamper_generator_v1"
+        },
+        "integrity_hash": "f58e2d6a9c3e6b0d4a7e1c5f8b2e5a9d3f6c0a4d7e1c5f8b2e5a9d3f6c0a47"
+      },
+      "invariant_violated": "vector_must_have_length_10",
+      "actual_length": 7,
+      "expected_length": 10,
+      "corruption_type": "invariant_violation"
+    }
+  ],
+  "additional_tamper_scenarios": [
+    {
+      "scenario": "missing_required_field",
+      "description": "Entry missing required 'timestamp' field",
+      "detection_method": "schema_validation"
+    },
+    {
+      "scenario": "invalid_data_type",
+      "description": "Vector contains string instead of float",
+      "detection_method": "type_checking"
+    },
+    {
+      "scenario": "out_of_range_values",
+      "description": "Confidence value outside [0.0, 1.0] range",
+      "detection_method": "range_validation"
+    },
+    {
+      "scenario": "temporal_inconsistency",
+      "description": "Timestamp before previous entry (non-sequential)",
+      "detection_method": "temporal_ordering"
+    }
+  ],
+  "validation_tests": {
+    "hash_verification": {
+      "method": "sha256",
+      "fields_included": ["entry_id", "timestamp", "signature", "vector", "metadata"],
+      "salt": "advanced_memory_core_v1"
+    },
+    "invariant_checks": [
+      {
+        "name": "vector_length",
+        "rule": "len(vector) == 10",
+        "severity": "critical"
+      },
+      {
+        "name": "confidence_range", 
+        "rule": "0.0 <= confidence <= 1.0",
+        "severity": "critical"
+      },
+      {
+        "name": "signature_format",
+        "rule": "len(signature) == 64 and signature.isalnum()",
+        "severity": "critical"
+      },
+      {
+        "name": "timestamp_format",
+        "rule": "timestamp matches ISO 8601 format",
+        "severity": "warning"
+      }
+    ]
+  },
+  "expected_system_behavior": {
+    "on_hash_mismatch": "reject_entry_immediately",
+    "on_invariant_violation": "block_with_detailed_error",
+    "on_missing_field": "schema_validation_failure",
+    "on_type_error": "type_checking_failure",
+    "logging_requirement": "all_rejections_must_be_logged_with_reason"
+  }
+}

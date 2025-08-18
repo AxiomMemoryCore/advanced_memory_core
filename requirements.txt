@@ -1,0 +1,15 @@
+# Advanced Memory Core - Dependencies
+# Pure Python implementation with minimal dependencies
+
+# No external dependencies required for core functionality
+# All tests use only Python standard library (json, hashlib, time, statistics, pathlib)
+
+# Optional: For enhanced testing with pytest
+# pytest>=6.0.0
+
+# Optional: For development and linting  
+# black>=22.0.0
+# flake8>=4.0.0
+
+# Note: This package is designed to work with Python 3.8+ standard library only
+# to maximize portability and minimize security surface area.
